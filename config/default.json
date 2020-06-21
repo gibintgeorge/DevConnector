@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://gibin123:gibin123@devconnector-xsnoh.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://gibin123:gibin123@devconnector-xsnoh.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtToken": "savemysecret"
 }
