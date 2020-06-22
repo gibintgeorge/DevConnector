@@ -165,7 +165,7 @@ router.delete("/", auth, async (req, res) => {
 //@desc    Add profile experiance
 //@access   private
 router.put(
-  "/experiance",
+  "/experience",
   [
     auth,
     [
@@ -212,4 +212,23 @@ router.put(
   }
 );
 
+//@route    delete api/profile/experience/:exp_id
+//@desc     Delete profile experiance
+//@access   private
+router.delete("/experience/:exp_id", auth, async (req, res) => {
+  try {
+    const profile = await Profile.findOne({ user: req.user.id });
+    const removeIndex = profile.experience
+      .map((item) => item.id)
+      .indexOf(req.params.exp_id);
+    if (removeIndex < 0)
+      return res.status(400).json({ msg: "Experiance not found" });
+    profile.experience.splice(removeIndex, 1);
+    await profile.save();
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 module.exports = router;
