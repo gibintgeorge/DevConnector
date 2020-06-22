@@ -116,4 +116,29 @@ router.get("/", async (req, res) => {
   }
 });
 
+//@route    GET api/profile/user/:user_id
+//@desc     Get profile by id
+//@access   Public
+router.get("/user/:user_id", async (req, res) => {
+  try {
+    const profile = await Profile.findOne({
+      user: req.params.user_id,
+    }).populate("user", ["name", "avatar"]);
+    if (!profile) {
+      return res
+        .status(400)
+        .json({ msg: "There is no profiles for the specified user" });
+    }
+    res.json(profile);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind == "ObjectId") {
+      return res
+        .status(400)
+        .json({ msg: "There is no profiles for the specified user" });
+    }
+    res.status(500).send("server error");
+  }
+});
+
 module.exports = router;
