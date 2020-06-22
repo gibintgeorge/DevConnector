@@ -80,7 +80,7 @@ router.post(
     if (facebook) profileFields.social.facebook = facebook;
 
     try {
-      let profile = Profile.findOne({ user: req.user.id });
+      let profile = await Profile.findOne({ user: req.user.id });
 
       if (profile) {
         //Update the existing profile
