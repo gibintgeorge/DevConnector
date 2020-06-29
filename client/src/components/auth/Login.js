@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { login } from "../../actions/auth";
 
-const Login = () => {
+const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -24,23 +26,14 @@ const Login = () => {
       console.log("Password shold not be empty");
     }
 
-    const newUser = {
-      email,
-      password,
-    };
     try {
-      // const config = {
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // };
-      // const body = JSON.stringify(newUser);
-      // const res = await axios.post("api/users", body, config);
-      // console.log(res.data);
+      login(email, password);
     } catch (err) {
       console.error(err.response.data);
     }
   };
+  //redirect id logged in
+  if (isAuthenticated) return <Redirect to="/dashboard" />;
   return (
     <>
       <h1 className="large text-primary">Sign Up</h1>
@@ -78,5 +71,11 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;
+Login.prototypes = {
+  login: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
+};
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
+});
+export default connect(mapStateToProps, { login })(Login);
