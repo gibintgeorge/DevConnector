@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { connect } from "react-redux";
+import { setAlert } from "../../actions/alert";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const Register = () => {
+const Register = (props) => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -19,25 +23,25 @@ const Register = () => {
   const onSubmit = async (event) => {
     event.preventDefault();
     if (password !== password2) {
-      console.log("Passwords does not match");
-      return;
-    }
-    const newUser = {
-      name,
-      email,
-      password,
-    };
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
+      props.setAlert("Passwords does not match", "danger");
+    } else {
+      const newUser = {
+        name,
+        email,
+        password,
       };
-      const body = JSON.stringify(newUser);
-      const res = await axios.post("api/users", body, config);
-      console.log(res.data);
-    } catch (err) {
-      console.error(err.response.data);
+      try {
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        };
+        const body = JSON.stringify(newUser);
+        const res = await axios.post("api/users", body, config);
+        console.log(res.data);
+      } catch (err) {
+        console.error(err.response.data);
+      }
     }
   };
   return (
@@ -96,10 +100,12 @@ const Register = () => {
         <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
-        Already have an account? <a href="login.html">Sign In</a>
+        Already have an account? <Link to="/login">Login</Link>
       </p>
     </>
   );
 };
-
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+};
+export default connect(null, { setAlert })(Register);
