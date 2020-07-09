@@ -7,6 +7,7 @@ const request = require("request");
 
 const Profile = require("../../models/Profile");
 const User = require("../../models/User");
+const Post = require("../../models/Post");
 
 //@route    GET api/profile/me
 //@desc     Get current users profile
@@ -35,7 +36,7 @@ router.post(
     auth,
     [
       check("status", "Status is required").not().isEmpty(),
-      check("skills", "Skilss are required").not().isEmpty(),
+      check("skills", "Skills are required").not().isEmpty(),
     ],
   ],
   async (req, res) => {
@@ -151,6 +152,7 @@ router.delete("/", auth, async (req, res) => {
     await Profile.findOneAndRemove({ user: req.user.id });
 
     // remove post
+    await Post.deleteMany({ user: req.user.id });
 
     // remove user
     await User.findOneAndRemove({ _id: req.user.id });

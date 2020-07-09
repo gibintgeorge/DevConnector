@@ -2,6 +2,7 @@ import {
   PROFILE_ERROR,
   CLEAR_PROFILE,
   GET_PROFILE,
+  UPDATE_PROFILE,
 } from "../actions/constants";
 
 const initialState = {
@@ -21,14 +22,20 @@ export default function (state = initialState, action) {
         loading: false,
         profile: payload,
       };
+    case UPDATE_PROFILE:
+      return {
+        ...state,
+        loading: false,
+        profile: payload,
+      };
     case PROFILE_ERROR:
-      console.log("state :>> ", state);
       return {
         ...state,
         error: payload,
         loading: false,
         profile: null,
       };
+
     case CLEAR_PROFILE:
       return {
         ...state,
