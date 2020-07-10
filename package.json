@@ -7,7 +7,8 @@
     "start": "node server",
     "server": "nodemon --ignore './client/' server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\" "
+    "dev": "concurrently \"npm run server\" \"npm run client\" ",
+    "clientdev": "concurrently \"npm start\" \"npm run client\" "
   },
   "author": "Gibin T George",
   "license": "ISC",
