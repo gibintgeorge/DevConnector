@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://gibin123:gibin123@devconnector-xsnoh.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtToken": "savemysecret",
+  "githubClientID": "455de407358a617b76f9",
+  "githubSecret": "54cabb3e0a47a3b16764caf3137cc9e3c5b3bbc5"
+}
